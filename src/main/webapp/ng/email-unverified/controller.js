@@ -23,7 +23,7 @@ function controllerFn($scope
   $scope.resendVerifyEmail = function() {
     $scope.isEmailed = false;
     if( $scope.userid ) {
-      var url = '/auth/email/verification/send/' + $scope.userid
+       var url = 'auth0/send_email_verify?userid=' + encodeURIComponent($scope.userid)
               ;
       $http.post(url)
         .then(function(resp) {

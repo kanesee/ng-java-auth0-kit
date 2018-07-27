@@ -40,9 +40,30 @@
       <url-pattern>/rest/*</url-pattern>
       <!-- <url-pattern>/rest2/*</url-pattern> -->
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>Auth0SendEmailVerify</servlet-name>
+        <servlet-class>com.auth0.SendEmailVerifyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Auth0SendEmailVerify</servlet-name>
+        <url-pattern>/auth0/send_email_verify</url-pattern>
+    </servlet-mapping>     
+
     <context-param>
         <param-name>com.auth0.domain</param-name>
         <param-value>XXXX.auth0.com</param-value>
     </context-param>
-
+    <context-param>
+      <param-name>com.auth0.clientId</param-name>
+      <param-value>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</param-value>
+    </context-param>
+    <context-param>
+      <param-name>com.auth0.api_clientId</param-name>
+      <param-value>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</param-value>
+    </context-param>
+    <context-param>
+      <param-name>com.auth0.api_client_secret</param-name>
+      <param-value>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</param-value>
+    </context-param>
  </web-app>
