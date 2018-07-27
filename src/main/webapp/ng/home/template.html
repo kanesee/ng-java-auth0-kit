@@ -1,0 +1,23 @@
+<!--<div ng-include="'ng/project-nav-header/template.html'"></div>-->
+
+<div class="container home-container" ng-controller="homeCtrl">
+  <div class="row"></div>
+  <div class="row">
+    <div class="col-xs-6">
+      <span ng-show="user">You are logged in as {{user}}</span>
+      <span ng-hide="user">You have not yet logged in</span>
+    </div>
+  </div>
+  
+  <div class="alert alert-warning"
+       ng-show="error">{{error}}</div>
+  
+</div>
+
+
+<link rel="stylesheet" type="text/css"
+      href="ng/home/style.css">
+
+<style>
+
+</style>

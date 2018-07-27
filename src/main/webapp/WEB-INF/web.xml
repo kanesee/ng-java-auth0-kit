@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app [
+<!-- ###MERGE_BEGIN ENTITIES ### -->
+<!-- ###MERGE_END ENTITIES ### -->
+]>
+<web-app version="2.4"
+ xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<!-- ###MERGE_BEGIN servlets ### -->
+    <servlet>
+        <servlet-name>JerseyREST</servlet-name>
+        <servlet-class>
+            org.glassfish.jersey.servlet.ServletContainer
+        </servlet-class>
+        <init-param>
+          <param-name>jersey.config.server.provider.classnames</param-name>
+          <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+      	</init-param>        
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <!-- ##### REFER TO THE PACKAGE WHERE YOU WANT JERSEY TO PICK UP THE RESOURCE CLASSES ###### -->
+            <!-- ##### Use semi-colon to specify multiple packages ###### -->
+            <param-value>org.codehaus.jackson.jaxrs;com.example.rest</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JerseyREST</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping> 
+
+    <!-- Auth0 -->
+    <filter>
+      <filter-name>Auth0Filter</filter-name>
+      <filter-class>com.auth0.Auth0Filter</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>Auth0Filter</filter-name>
+      <url-pattern>/rest/*</url-pattern>
+      <!-- <url-pattern>/rest2/*</url-pattern> -->
+    </filter-mapping>
+    <context-param>
+        <param-name>com.auth0.domain</param-name>
+        <param-value>XXXX.auth0.com</param-value>
+    </context-param>
+
+ </web-app>
