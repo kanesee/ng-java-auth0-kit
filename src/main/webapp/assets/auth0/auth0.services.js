@@ -57,6 +57,16 @@ app.service('AuthService',
                       ,UserSession
                       ) {
 
+  function init() {
+    console.log('authService init');
+    angularAuth0.checkSession({
+        scope:'openid profile email'
+      }, function (err, authResult) {
+      _handleAuthentication(err, authResult)
+    });
+  }
+  init();
+  
   function login() {
     var path = $location.path();
     if( path.indexOf('/auth-required') == -1
@@ -71,29 +81,33 @@ app.service('AuthService',
   }
 
   function handleAuthentication() {
-    angularAuth0.parseHash(function(err, authResult) {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        setSession(authResult);
-        var nextPath = $window.localStorage.nextPath;
-        console.log('redirecting to '+nextPath);
-        if( nextPath ) {
-          $location.path(nextPath);
-        }
-        
-      } else if (err) {
-        console.error(err);
-        if( err.errorDescription.indexOf('Please verify your email before logging in.') === 0 ) {
-          var userid = err.errorDescription.substring(err.errorDescription.indexOf('[')+1)
-          userid = userid.substring(0, userid.length-1);
-//          console.log('userid: '+userid);
-          $location.url('/email-unverified/'+userid);
-        } else {
-          console.log(err);
-          alert('Error: ' + err.error + '. Check the console for further details.');
-        }
-      }
-    });
+    angularAuth0.parseHash(_handleAuthentication);
   }
+  
+  function _handleAuthentication(err, authResult) {
+    if (authResult && authResult.accessToken && authResult.idToken) {
+      setSession(authResult);
+      var nextPath = $window.localStorage.nextPath;
+      console.log('redirecting to '+nextPath);
+      if( nextPath ) {
+        $location.path(nextPath);
+      }
+      
+    } else if (err) {
+      console.error(err);
+      if( err.errorDescription
+      &&  err.errorDescription.indexOf('Please verify your email before logging in.') === 0 ) {
+        var userid = err.errorDescription.substring(err.errorDescription.indexOf('[')+1)
+        userid = userid.substring(0, userid.length-1);
+//          console.log('userid: '+userid);
+        $location.url('/email-unverified/'+userid);
+      } else {
+        console.log(err);
+//          alert('Error: ' + err.error + '. Check the console for further details.');
+      }
+    }
+  }  
+
 
   function setSession(authResult) {
 //      console.log(authResult);
