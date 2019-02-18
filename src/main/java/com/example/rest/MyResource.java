@@ -20,7 +20,7 @@ public class MyResource {
 
   @GET
   @Path("/user")
-  public String getRandomNumber(@Context HttpServletRequest req) {
+  public String getUser(@Context HttpServletRequest req) {
     try {
       String user = (String) req.getAttribute("user");
       if( user != null ) {

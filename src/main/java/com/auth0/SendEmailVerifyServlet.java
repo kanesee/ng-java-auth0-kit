@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.HttpResponse;
 import org.json.JSONObject;
 
-import com.inferlink.common.rest.RestUtil;
+import com.auth0.RestUtil;
 
 public class SendEmailVerifyServlet extends HttpServlet {
 
